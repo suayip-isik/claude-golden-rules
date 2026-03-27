@@ -107,7 +107,7 @@ Bir şeyin nereye ait olduğundan emin değil misin? Bu ağacı kullan:
 
 ```
 ├── claude-code-efficiency-guide.md      # Tam rehber (İngilizce)
-├── claude-altin-kurallar-ve-maliyet.md  # Tam rehber (Türkçe)
+├── claude-code-verimli-kullanim-rehberi.md  # Tam rehber (Türkçe)
 ├── README.md                            # İngilizce README
 └── README.tr.md                         # Bu dosya (Türkçe)
 ```

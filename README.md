@@ -1,5 +1,8 @@
 # Claude Code — Efficiency Guide
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Languages: EN / TR](https://img.shields.io/badge/Languages-EN%20%2F%20TR-blue.svg)](README.tr.md)
+
 > A practical reference for developers on how to use Claude Code effectively — covering file type selection, cost optimization, security, error recovery, and team workflow.
 
 ---
@@ -107,7 +110,7 @@ Not sure where something belongs? Use this tree:
 
 ```
 ├── claude-code-efficiency-guide.md   # Full guide (English)
-├── claude-altin-kurallar-ve-maliyet.md  # Full guide (Turkish)
+├── claude-code-verimli-kullanim-rehberi.md  # Full guide (Turkish)
 ├── README.md                         # This file (English)
 └── README.tr.md                      # Turkish README
 ```
