@@ -44,34 +44,40 @@ For general developer audiences: file type selection, cost optimization, securit
 
 ```markdown
 # Project Name
+
 1-2 sentence description
 
 ## Tech Stack
+
 5-8 lines
 
 ## Directory Structure
+
 10-15 lines — main folders only
 
 ## Commands
+
 8-12 lines — frequently used ones
 
 ## Core Rules
+
 10-15 items — only rules valid for EVERY task
 
 ## Forbidden
+
 5-10 items — things that must NEVER be done
 ```
 
 ### Common Mistakes
 
-| Mistake | Why It's a Problem | Fix |
-|---|---|---|
-| 500+ lines, everything in one place | Instruction-following quality drops, token waste | Move to rules/skills |
-| Writing code examples | Bloats context, Claude already knows | Just write the rule |
-| Writing linter rules | Cannot be followed 100%, wasteful | Use `.eslintrc` |
-| Table of contents, emoji headings | Unnecessary token consumption | Plain markdown |
-| Repeating the same rule in multiple places | Context pollution + risk of inconsistency | Single source of truth |
-| Writing secrets/API keys | Security vulnerability, can leak into git | Use `.env`, never write to CLAUDE.md |
+| Mistake                                    | Why It's a Problem                               | Fix                                  |
+| ------------------------------------------ | ------------------------------------------------ | ------------------------------------ |
+| 500+ lines, everything in one place        | Instruction-following quality drops, token waste | Move to rules/skills                 |
+| Writing code examples                      | Bloats context, Claude already knows             | Just write the rule                  |
+| Writing linter rules                       | Cannot be followed 100%, wasteful                | Use `.eslintrc`                      |
+| Table of contents, emoji headings          | Unnecessary token consumption                    | Plain markdown                       |
+| Repeating the same rule in multiple places | Context pollution + risk of inconsistency        | Single source of truth               |
+| Writing secrets/API keys                   | Security vulnerability, can leak into git        | Use `.env`, never write to CLAUDE.md |
 
 ---
 
@@ -98,22 +104,22 @@ paths:
 
 ### Path-Scoped vs Global
 
-| Case | Path-Scoped | Global (no path) |
-|---|---|---|
-| CSS rules | ✅ `src/styles/**` | ❌ |
-| JS/TS rules | ✅ `src/**/*.ts` | ❌ |
-| Git workflow | ❌ | ✅ Always applies |
-| Workflow (plan-first) | ❌ | ✅ Always applies |
-| Security | ✅ `*.html`, `src/**/*.js` | ❌ |
+| Case                  | Path-Scoped                | Global (no path)  |
+| --------------------- | -------------------------- | ----------------- |
+| CSS rules             | ✅ `src/styles/**`         | ❌                |
+| JS/TS rules           | ✅ `src/**/*.ts`           | ❌                |
+| Git workflow          | ❌                         | ✅ Always applies |
+| Workflow (plan-first) | ❌                         | ✅ Always applies |
+| Security              | ✅ `*.html`, `src/**/*.js` | ❌                |
 
 ### Common Mistakes
 
-| Mistake | Fix |
-|---|---|
-| Not using path-scoping | Add relevant paths to every rule file |
-| Repeating CLAUDE.md rules in a rule file | Delete from one location; keep it in one place |
-| 100+ line rule file | Consider splitting or trimming details |
-| Writing long code snippets | A single-line rule is enough; Claude learns patterns from the codebase |
+| Mistake                                  | Fix                                                                    |
+| ---------------------------------------- | ---------------------------------------------------------------------- |
+| Not using path-scoping                   | Add relevant paths to every rule file                                  |
+| Repeating CLAUDE.md rules in a rule file | Delete from one location; keep it in one place                         |
+| 100+ line rule file                      | Consider splitting or trimming details                                 |
+| Writing long code snippets               | A single-line rule is enough; Claude learns patterns from the codebase |
 
 ---
 
@@ -147,21 +153,21 @@ Run these steps:
 
 ### When to Use a Command vs Something Else
 
-| Need | Tool |
-|---|---|
-| "Run the same steps every time" | Command |
+| Need                              | Tool           |
+| --------------------------------- | -------------- |
+| "Run the same steps every time"   | Command        |
 | "Let Claude decide automatically" | Agent or Skill |
-| "Needs a template + script" | Skill |
-| "Applies to every file edit" | Rule |
-| "Applies to every session" | CLAUDE.md |
+| "Needs a template + script"       | Skill          |
+| "Applies to every file edit"      | Rule           |
+| "Applies to every session"        | CLAUDE.md      |
 
 ### Common Mistakes
 
-| Mistake | Fix |
-|---|---|
-| Creating 10+ commands | 3–5 core commands is enough |
-| Granting all tools to every command | Principle of least privilege |
-| Long explanations inside commands | Short instruction; Claude knows the rest |
+| Mistake                             | Fix                                      |
+| ----------------------------------- | ---------------------------------------- |
+| Creating 10+ commands               | 3–5 core commands is enough              |
+| Granting all tools to every command | Principle of least privilege             |
+| Long explanations inside commands   | Short instruction; Claude knows the rest |
 
 ---
 
@@ -198,20 +204,20 @@ description: Creates a new React component with TypeScript, a Storybook story, a
 
 ### When to Use a Skill vs a Command
 
-| Skill | Command |
-|---|---|
-| Claude can trigger it automatically | Only you trigger it |
-| Has template/script/reference files | A single markdown file is enough |
-| Multi-step, rich workflow | Simple checklist or single step |
-| Loaded on-demand into context | Loaded when called with `/command` |
+| Skill                               | Command                            |
+| ----------------------------------- | ---------------------------------- |
+| Claude can trigger it automatically | Only you trigger it                |
+| Has template/script/reference files | A single markdown file is enough   |
+| Multi-step, rich workflow           | Simple checklist or single step    |
+| Loaded on-demand into context       | Loaded when called with `/command` |
 
 ### Common Mistakes
 
-| Mistake | Fix |
-|---|---|
+| Mistake                                  | Fix                                             |
+| ---------------------------------------- | ----------------------------------------------- |
 | Writing large references inside SKILL.md | Put in a separate file; reference from SKILL.md |
-| Vague description | Write specifically; include trigger keywords |
-| Defining too many skills | Each skill's metadata consumes ~100 tokens |
+| Vague description                        | Write specifically; include trigger keywords    |
+| Defining too many skills                 | Each skill's metadata consumes ~100 tokens      |
 
 ---
 
@@ -278,22 +284,22 @@ Multiple agents can be triggered simultaneously for independent tasks. The main 
 
 ### When to Use an Agent vs a Command
 
-| Agent | Command |
-|---|---|
+| Agent                                           | Command                         |
+| ----------------------------------------------- | ------------------------------- |
 | Needs to read many files (context preservation) | Single file or a known file set |
-| Claude should delegate automatically | You trigger it manually |
-| A result summary is sufficient | You want to see all details |
-| Can run in parallel | Sequential steps required |
+| Claude should delegate automatically            | You trigger it manually         |
+| A result summary is sufficient                  | You want to see all details     |
+| Can run in parallel                             | Sequential steps required       |
 
 ### Common Mistakes
 
-| Mistake | Fix |
-|---|---|
-| Creating an agent that applies changes | Agent reads/analyzes; main session applies |
-| Granting all tools | Minimum permissions: Read, Grep, Glob |
-| Using a common name | Use a unique, project-specific name |
+| Mistake                                 | Fix                                                               |
+| --------------------------------------- | ----------------------------------------------------------------- |
+| Creating an agent that applies changes  | Agent reads/analyzes; main session applies                        |
+| Granting all tools                      | Minimum permissions: Read, Grep, Glob                             |
+| Using a common name                     | Use a unique, project-specific name                               |
 | Re-writing CLAUDE.md rules in the agent | Agents get their own system prompt; they do not receive CLAUDE.md |
-| Not specifying an output format | Ask it to return in a format the main session can process |
+| Not specifying an output format         | Ask it to return in a format the main session can process         |
 
 ---
 
@@ -424,6 +430,7 @@ Add the following to the `settings.json` deny list in every project:
 **Only connect official or trusted MCP servers.** Every MCP server is added as a tool for Claude and consumes context.
 
 **What to check with third-party MCP servers:**
+
 - Is it open source and audited?
 - What permissions does it require?
 - Does it have network access?
@@ -457,8 +464,10 @@ git reset --hard HEAD~1
 ```
 
 **Add to CLAUDE.md:**
+
 ```markdown
 ## Rules
+
 - Create a checkpoint commit before large changes
 - Use a separate branch for each feature; never write directly to main
 ```
@@ -503,8 +512,10 @@ If Claude starts behaving inconsistently during a long session:
 ```
 
 **Write information that could be lost after compaction into CLAUDE.md:**
+
 ```markdown
 ## Critical Context
+
 - Auth module uses JWT, not sessions
 - Database migrations are not squashed; order matters
 - Staging environment differs from production: feature X is disabled
@@ -548,14 +559,14 @@ claude --debug
 
 ### Common Issues and Solutions
 
-| Issue | Likely Cause | Fix |
-|---|---|---|
-| Claude behaves differently each time | Context pollution | Start a new session with `/clear` |
-| Rule is followed sometimes but not always | CLAUDE.md is too long | Cut to 200 lines; move the rest to rules |
-| Agent returns no result | Missing tool permission | Check the `tools:` list |
-| Skill is not triggering | Description is too vague | Add trigger keywords to the description |
-| Claude "forgets" after compaction | Compaction skipped critical context | Write critical items to CLAUDE.md |
-| Claude is slow to respond | Context window is full | Run `/compact` or `/clear` |
+| Issue                                     | Likely Cause                        | Fix                                      |
+| ----------------------------------------- | ----------------------------------- | ---------------------------------------- |
+| Claude behaves differently each time      | Context pollution                   | Start a new session with `/clear`        |
+| Rule is followed sometimes but not always | CLAUDE.md is too long               | Cut to 200 lines; move the rest to rules |
+| Agent returns no result                   | Missing tool permission             | Check the `tools:` list                  |
+| Skill is not triggering                   | Description is too vague            | Add trigger keywords to the description  |
+| Claude "forgets" after compaction         | Compaction skipped critical context | Write critical items to CLAUDE.md        |
+| Claude is slow to respond                 | Context window is full              | Run `/compact` or `/clear`               |
 
 ### Create a Debug Command
 
@@ -581,11 +592,13 @@ Check and report the following:
 ### Testing After Adding a New Rule
 
 **Step 1 — Open an isolated test session:**
+
 ```bash
 /clear   # Clean context
 ```
 
 **Step 2 — Give a task that would violate the rule:**
+
 ```bash
 # Example: to test the "no callbacks" rule
 > Read a file using fs.readFile
@@ -594,6 +607,7 @@ Check and report the following:
 **Step 3 — Observe whether Claude applies the rule.**
 
 **Step 4 — Test edge cases:**
+
 ```bash
 > Refactor this callback-based code: [old code]
 ```
@@ -651,6 +665,7 @@ Check and report the following:
 ```
 
 **Add to `.gitignore`:**
+
 ```
 .claude/settings.local.json
 .claude/.credentials
@@ -658,16 +673,17 @@ Check and report the following:
 
 ### Personal vs. Project-Wide Settings
 
-| Setting | Where |
-|---|---|
-| Shared team permissions and hooks | `.claude/settings.json` (in git) |
+| Setting                                        | Where                                      |
+| ---------------------------------------------- | ------------------------------------------ |
+| Shared team permissions and hooks              | `.claude/settings.json` (in git)           |
 | Personal model preference, personal allow/deny | `.claude/settings.local.json` (not in git) |
-| Personal settings for all projects | `~/.claude/settings.json` |
-| Personal CLAUDE.md for all projects | `~/.claude/CLAUDE.md` |
+| Personal settings for all projects             | `~/.claude/settings.json`                  |
+| Personal CLAUDE.md for all projects            | `~/.claude/CLAUDE.md`                      |
 
 ### Team CLAUDE.md Synchronization
 
 **PR process for significant changes:**
+
 ```bash
 git checkout -b claude/update-rules
 # Update CLAUDE.md or rule files
@@ -677,6 +693,7 @@ git push && gh pr create
 ```
 
 **To prevent conflicts within the team:**
+
 - Each rule file has a single owner (similar to CODEOWNERS)
 - Changes to CLAUDE.md require at least 1 reviewer
 - Keeping a changelog for rules is optional but useful in large teams
@@ -723,6 +740,7 @@ rules/ (path-scoped)              ← Most specific rule
 ### Rule Conflict Scenarios
 
 **Scenario 1 — Same rule in CLAUDE.md and a rule file:**
+
 ```
 Problem: CLAUDE.md says "use async/await"
          rules/js.md says "use Promise.then()"
@@ -731,6 +749,7 @@ Principle: Single source. The rule file is more specific and overrides CLAUDE.md
 ```
 
 **Scenario 2 — Agent instruction vs. CLAUDE.md:**
+
 ```
 Situation: CLAUDE.md says "write comments in English"
            Agent system prompt does not specify this
@@ -739,6 +758,7 @@ Fix:       Write the required rules directly into the agent's system prompt
 ```
 
 **Scenario 3 — settings.json deny vs. user request:**
+
 ```
 User:  "Run git push --force"
 Deny list contains: "Bash(git push --force*)"
@@ -747,6 +767,7 @@ Fix:   If necessary, temporarily remove from deny, do the work, then add back
 ```
 
 **Scenario 4 — Two path-scoped rules conflict:**
+
 ```
 rules/ts-api.md  (paths: src/api/**)     → "use zod"
 rules/ts-general.md (paths: src/**)      → "use yup"
@@ -769,16 +790,16 @@ Every token in the context window is re-sent with every message. In a 50-message
 
 ### Highest-Impact Strategies
 
-| Strategy | Estimated Savings | Notes |
-|---|---|---|
-| **`/clear` between tasks** | 30–50% | Clear context when switching to a different task |
-| **Reduce CLAUDE.md to 200 lines** | 20–30% | Move the rest to rules/skills |
-| **Write specific prompts** | 15–25% | Reference with `@file.ts:45-60` |
-| **Model selection** | 30–80% cost reduction | Haiku for simple work, Sonnet for normal, Opus for critical |
-| **Plan Mode (Shift+Tab×2)** | 20–40% | Plan before coding; prevents rework |
-| **Path-scoped rules** | 10–20% | Irrelevant rules should not be loaded |
-| **Move to skills** | 10–15% | On-demand loading |
-| **MCP server cleanup** | 5–30% | Remove unused servers |
+| Strategy                          | Estimated Savings     | Notes                                                       |
+| --------------------------------- | --------------------- | ----------------------------------------------------------- |
+| **`/clear` between tasks**        | 30–50%                | Clear context when switching to a different task            |
+| **Reduce CLAUDE.md to 200 lines** | 20–30%                | Move the rest to rules/skills                               |
+| **Write specific prompts**        | 15–25%                | Reference with `@file.ts:45-60`                             |
+| **Model selection**               | 30–80% cost reduction | Haiku for simple work, Sonnet for normal, Opus for critical |
+| **Plan Mode (Shift+Tab×2)**       | 20–40%                | Plan before coding; prevents rework                         |
+| **Path-scoped rules**             | 10–20%                | Irrelevant rules should not be loaded                       |
+| **Move to skills**                | 10–15%                | On-demand loading                                           |
+| **MCP server cleanup**            | 5–30%                 | Remove unused servers                                       |
 
 ### Session Management
 
@@ -805,6 +826,7 @@ claude --model opus     # Critical: architecture, planning, complex debugging
 ```
 
 Specify the model in agents too:
+
 ```yaml
 model: haiku    # Format checks, simple analysis
 model: sonnet   # Code review, codebase research
@@ -831,17 +853,17 @@ model: opus     # Architecture decisions, complex planning
 
 ### Anti-Patterns
 
-| Anti-Pattern | Why It's a Problem | Correct Approach |
-|---|---|---|
-| Writing everything in CLAUDE.md | All tokens load with every message | Distribute across rules + skills |
-| Connecting 10+ MCP servers | Tool definitions fill the context | Keep only what you use |
-| 10+ custom commands | Complexity, maintenance burden | 3–5 core commands |
-| Granting all tools to an agent | Unnecessary context, security risk | Minimum permissions |
-| Delaying compaction | Quality drops when context is full | Compact at 60% |
-| Using Opus for every task | 5x cost; unnecessary for most tasks | Haiku/Sonnet/Opus hybrid |
-| Writing vague prompts | Exploration tokens are wasted | Use `@file:line` references |
-| Mixing different tasks in one session | Context pollution | Separate tasks with `/clear` |
-| Code examples in CLAUDE.md | Unnecessary tokens | Write the rule; Claude learns patterns from the codebase |
+| Anti-Pattern                          | Why It's a Problem                  | Correct Approach                                         |
+| ------------------------------------- | ----------------------------------- | -------------------------------------------------------- |
+| Writing everything in CLAUDE.md       | All tokens load with every message  | Distribute across rules + skills                         |
+| Connecting 10+ MCP servers            | Tool definitions fill the context   | Keep only what you use                                   |
+| 10+ custom commands                   | Complexity, maintenance burden      | 3–5 core commands                                        |
+| Granting all tools to an agent        | Unnecessary context, security risk  | Minimum permissions                                      |
+| Delaying compaction                   | Quality drops when context is full  | Compact at 60%                                           |
+| Using Opus for every task             | 5x cost; unnecessary for most tasks | Haiku/Sonnet/Opus hybrid                                 |
+| Writing vague prompts                 | Exploration tokens are wasted       | Use `@file:line` references                              |
+| Mixing different tasks in one session | Context pollution                   | Separate tasks with `/clear`                             |
+| Code examples in CLAUDE.md            | Unnecessary tokens                  | Write the rule; Claude learns patterns from the codebase |
 
 ---
 
@@ -866,16 +888,19 @@ model: opus     # Architecture decisions, complex planning
 ### Getting Started Strategy
 
 **Day 1 — Minimum viable setup:**
+
 - `CLAUDE.md` (100–200 lines)
 - `.claude/rules/workflow.md` (plan-first flow)
 - `.claude/settings.json` (basic deny list)
 
 **Week 1 — Core expansion:**
+
 - `.claude/rules/code-style.md` (path-scoped)
 - `.claude/settings.json` hooks (linter automation)
 - 1–2 commands (your most frequently repeated tasks)
 
 **Week 2+ — As needed:**
+
 - Recurring problems → add the relevant rule
 - Frequently performed rich tasks → create a skill
 - Tasks that cause context pollution → add an agent
@@ -884,15 +909,15 @@ model: opus     # Architecture decisions, complex planning
 
 ### File Type Summary Table
 
-| File | Load Trigger | Ideal Size | Cost Impact |
-|---|---|---|---|
-| CLAUDE.md | Every message | 100–200 lines | HIGHEST — every line is a multiplier |
-| rules/ (path-scoped) | When relevant file is opened | 30–60 lines | MEDIUM — conditional |
-| rules/ (global) | Every message | 30–50 lines | HIGH — same as CLAUDE.md |
-| commands/ | With `/command` | 20–50 lines | LOW — one-time load |
-| skills/ | When needed | 50–150 lines | LOW — on-demand |
-| agents/ | When delegated | 30–80 lines | LOW — separate context |
-| settings.json | Session start | — | NONE — config only |
+| File                 | Load Trigger                 | Ideal Size    | Cost Impact                          |
+| -------------------- | ---------------------------- | ------------- | ------------------------------------ |
+| CLAUDE.md            | Every message                | 100–200 lines | HIGHEST — every line is a multiplier |
+| rules/ (path-scoped) | When relevant file is opened | 30–60 lines   | MEDIUM — conditional                 |
+| rules/ (global)      | Every message                | 30–50 lines   | HIGH — same as CLAUDE.md             |
+| commands/            | With `/command`              | 20–50 lines   | LOW — one-time load                  |
+| skills/              | When needed                  | 50–150 lines  | LOW — on-demand                      |
+| agents/              | When delegated               | 30–80 lines   | LOW — separate context               |
+| settings.json        | Session start                | —             | NONE — config only                   |
 
 ---
 
@@ -923,4 +948,4 @@ model: opus     # Architecture decisions, complex planning
 
 ---
 
-*This document should be updated as Claude Code usage practices evolve. Behavioral changes may occur with new Claude Code releases — follow the official changelog.*
+_This document should be updated as Claude Code usage practices evolve. Behavioral changes may occur with new Claude Code releases — follow the official changelog._

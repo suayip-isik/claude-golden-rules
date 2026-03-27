@@ -44,34 +44,40 @@ Genel geliştirici kitlesine yönelik; dosya türü seçimi, maliyet optimizasyo
 
 ```markdown
 # Proje Adı
+
 1-2 cümle açıklama
 
 ## Tech Stack
+
 5-8 satır
 
 ## Dizin Yapısı
+
 10-15 satır — ana klasörler
 
 ## Komutlar
+
 8-12 satır — sık kullanılanlar
 
 ## Temel Kurallar
+
 10-15 madde — yalnızca HER görevde geçerli olanlar
 
 ## Yasaklar
+
 5-10 madde — ASLA yapılmaması gerekenler
 ```
 
 ### Yaygın Hatalar
 
-| Hata | Neden Sorun | Çözüm |
-|---|---|---|
-| 500+ satır, her şey bir arada | Talimat takip kalitesi düşer, token israfı | Rules/skills'e taşı |
-| Kod örnekleri yazma | Context şişer, Claude zaten biliyor | Sadece kuralı yaz |
-| Linter kuralları yazma | %100 takip edilmez, israf | `.eslintrc` kullan |
-| İçindekiler tablosu, emoji başlıklar | Gereksiz token tüketimi | Düz markdown |
-| Aynı kuralı farklı yerlerde tekrarlama | Context kirliliği + tutarsızlık riski | Tek kaynak prensibi |
-| Secret/API key yazmak | Güvenlik açığı, git'e sızabilir | `.env` kullan, asla CLAUDE.md'ye yazma |
+| Hata                                   | Neden Sorun                                | Çözüm                                  |
+| -------------------------------------- | ------------------------------------------ | -------------------------------------- |
+| 500+ satır, her şey bir arada          | Talimat takip kalitesi düşer, token israfı | Rules/skills'e taşı                    |
+| Kod örnekleri yazma                    | Context şişer, Claude zaten biliyor        | Sadece kuralı yaz                      |
+| Linter kuralları yazma                 | %100 takip edilmez, israf                  | `.eslintrc` kullan                     |
+| İçindekiler tablosu, emoji başlıklar   | Gereksiz token tüketimi                    | Düz markdown                           |
+| Aynı kuralı farklı yerlerde tekrarlama | Context kirliliği + tutarsızlık riski      | Tek kaynak prensibi                    |
+| Secret/API key yazmak                  | Güvenlik açığı, git'e sızabilir            | `.env` kullan, asla CLAUDE.md'ye yazma |
 
 ---
 
@@ -98,22 +104,22 @@ paths:
 
 ### Path-Scoped vs Global
 
-| Durum | Path-Scoped | Global (path yok) |
-|---|---|---|
-| CSS kuralları | ✅ `src/styles/**` | ❌ |
-| JS/TS kuralları | ✅ `src/**/*.ts` | ❌ |
-| Git workflow | ❌ | ✅ Her zaman geçerli |
-| Workflow (plan-first) | ❌ | ✅ Her zaman geçerli |
-| Güvenlik | ✅ `*.html`, `src/**/*.js` | ❌ |
+| Durum                 | Path-Scoped                | Global (path yok)    |
+| --------------------- | -------------------------- | -------------------- |
+| CSS kuralları         | ✅ `src/styles/**`         | ❌                   |
+| JS/TS kuralları       | ✅ `src/**/*.ts`           | ❌                   |
+| Git workflow          | ❌                         | ✅ Her zaman geçerli |
+| Workflow (plan-first) | ❌                         | ✅ Her zaman geçerli |
+| Güvenlik              | ✅ `*.html`, `src/**/*.js` | ❌                   |
 
 ### Yaygın Hatalar
 
-| Hata | Çözüm |
-|---|---|
-| Path-scoping kullanmamak | Her rule dosyasına ilgili path'leri ekle |
-| CLAUDE.md'deki kuralları rule'da tekrarlamak | Birinden sil, tek yerde tut |
-| 100+ satır rule dosyası | Bölmeyi düşün veya detayları kısalt |
-| Kod snippet'leri uzun uzun yazmak | Tek satır kural yeterli, Claude pattern'i codebase'den öğrenir |
+| Hata                                         | Çözüm                                                          |
+| -------------------------------------------- | -------------------------------------------------------------- |
+| Path-scoping kullanmamak                     | Her rule dosyasına ilgili path'leri ekle                       |
+| CLAUDE.md'deki kuralları rule'da tekrarlamak | Birinden sil, tek yerde tut                                    |
+| 100+ satır rule dosyası                      | Bölmeyi düşün veya detayları kısalt                            |
+| Kod snippet'leri uzun uzun yazmak            | Tek satır kural yeterli, Claude pattern'i codebase'den öğrenir |
 
 ---
 
@@ -147,21 +153,21 @@ allowed-tools: Bash
 
 ### Ne Zaman Command, Ne Zaman Başka Bir Şey
 
-| İhtiyaç | Araç |
-|---|---|
-| "Her seferinde aynı adımları çalıştır" | Command |
-| "Claude otomatik karar versin" | Agent veya Skill |
-| "Template + script gerekli" | Skill |
-| "Her dosya düzenlemesinde geçerli" | Rule |
-| "Her oturumda geçerli" | CLAUDE.md |
+| İhtiyaç                                | Araç             |
+| -------------------------------------- | ---------------- |
+| "Her seferinde aynı adımları çalıştır" | Command          |
+| "Claude otomatik karar versin"         | Agent veya Skill |
+| "Template + script gerekli"            | Skill            |
+| "Her dosya düzenlemesinde geçerli"     | Rule             |
+| "Her oturumda geçerli"                 | CLAUDE.md        |
 
 ### Yaygın Hatalar
 
-| Hata | Çözüm |
-|---|---|
-| 10+ command oluşturmak | 3-5 temel command yeterli |
-| Her command'a tüm tool'ları vermek | Minimum yetki prensibi |
-| Command içinde uzun açıklamalar | Kısa talimat, Claude gerisini bilir |
+| Hata                               | Çözüm                               |
+| ---------------------------------- | ----------------------------------- |
+| 10+ command oluşturmak             | 3-5 temel command yeterli           |
+| Her command'a tüm tool'ları vermek | Minimum yetki prensibi              |
+| Command içinde uzun açıklamalar    | Kısa talimat, Claude gerisini bilir |
 
 ---
 
@@ -198,20 +204,20 @@ description: Yeni React bileşeni oluşturur. TypeScript, Storybook hikayesi ve 
 
 ### Ne Zaman Skill, Ne Zaman Command
 
-| Skill | Command |
-|---|---|
-| Claude otomatik tetikleyebilir | Yalnızca sen tetiklersin |
-| Template/script/referans dosyaları var | Tek markdown dosyası yeterli |
-| Birden fazla adımlı, zengin iş akışı | Basit checklist veya tek adım |
-| Context'e on-demand yüklenir | `/komut` ile çağrıldığında yüklenir |
+| Skill                                  | Command                             |
+| -------------------------------------- | ----------------------------------- |
+| Claude otomatik tetikleyebilir         | Yalnızca sen tetiklersin            |
+| Template/script/referans dosyaları var | Tek markdown dosyası yeterli        |
+| Birden fazla adımlı, zengin iş akışı   | Basit checklist veya tek adım       |
+| Context'e on-demand yüklenir           | `/komut` ile çağrıldığında yüklenir |
 
 ### Yaygın Hatalar
 
-| Hata | Çözüm |
-|---|---|
-| SKILL.md içine dev referans yazmak | Ayrı dosyaya koy, SKILL.md'den referans ver |
-| Belirsiz description | Spesifik yaz, tetikleme keyword'lerini dahil et |
-| Çok fazla skill tanımlamak | Her skill metadata'sı context tüketir (~100 token) |
+| Hata                               | Çözüm                                              |
+| ---------------------------------- | -------------------------------------------------- |
+| SKILL.md içine dev referans yazmak | Ayrı dosyaya koy, SKILL.md'den referans ver        |
+| Belirsiz description               | Spesifik yaz, tetikleme keyword'lerini dahil et    |
+| Çok fazla skill tanımlamak         | Her skill metadata'sı context tüketir (~100 token) |
 
 ---
 
@@ -278,22 +284,22 @@ Bağımsız görevler için birden fazla agent aynı anda tetiklenebilir. Ana ot
 
 ### Ne Zaman Agent, Ne Zaman Command
 
-| Agent | Command |
-|---|---|
+| Agent                                      | Command                           |
+| ------------------------------------------ | --------------------------------- |
 | Çok dosya okuması gerekli (context koruma) | Tek dosya veya bilinen dosya seti |
-| Claude otomatik delege edebilmeli | Sen manuel tetiklemelisin |
-| Sonuç özeti yeterli | Tüm detayı görmek istiyorsun |
-| Paralel çalıştırılabilir | Sıralı adımlar |
+| Claude otomatik delege edebilmeli          | Sen manuel tetiklemelisin         |
+| Sonuç özeti yeterli                        | Tüm detayı görmek istiyorsun      |
+| Paralel çalıştırılabilir                   | Sıralı adımlar                    |
 
 ### Yaygın Hatalar
 
-| Hata | Çözüm |
-|---|---|
-| Uygulama yapan agent oluşturmak | Agent okusun/analiz etsin, uygulamayı ana oturum yapsın |
-| Tüm tool'ları vermek | Minimum yetki: Read, Grep, Glob yeterli |
-| Yaygın isim kullanmak | Özel, projeye özgü isim ver |
-| Agent'a CLAUDE.md kurallarını tekrar yazmak | Agent kendi system prompt'unu alır, CLAUDE.md almaz |
-| Çıktı formatı belirtmemek | Ana oturumun işleyeceği formatta döndürmesini iste |
+| Hata                                        | Çözüm                                                   |
+| ------------------------------------------- | ------------------------------------------------------- |
+| Uygulama yapan agent oluşturmak             | Agent okusun/analiz etsin, uygulamayı ana oturum yapsın |
+| Tüm tool'ları vermek                        | Minimum yetki: Read, Grep, Glob yeterli                 |
+| Yaygın isim kullanmak                       | Özel, projeye özgü isim ver                             |
+| Agent'a CLAUDE.md kurallarını tekrar yazmak | Agent kendi system prompt'unu alır, CLAUDE.md almaz     |
+| Çıktı formatı belirtmemek                   | Ana oturumun işleyeceği formatta döndürmesini iste      |
 
 ---
 
@@ -424,6 +430,7 @@ Aşağıdakileri her projede `settings.json` deny listesine ekle:
 **Yalnızca resmi veya güvenilir MCP serverları bağla.** Her MCP server, Claude'a araç olarak eklenir ve context tüketir.
 
 **Üçüncü parti MCP serverlarında dikkat edilmesi gerekenler:**
+
 - Açık kaynaklı ve audit edilmiş mi?
 - Hangi izinlere ihtiyaç duyuyor?
 - Ağ erişimi var mı?
@@ -457,8 +464,10 @@ git reset --hard HEAD~1
 ```
 
 **CLAUDE.md'ye yaz:**
+
 ```markdown
 ## Kurallar
+
 - Büyük değişikliklerden önce "checkpoint commit" at
 - Her özellik için ayrı branch kullan, doğrudan main'e yazma
 ```
@@ -503,8 +512,10 @@ Uzun bir oturumda Claude tutarsız davranmaya başlarsa:
 ```
 
 **Compact sonrası kaybolabilecek bilgileri CLAUDE.md'ye yaz:**
+
 ```markdown
 ## Kritik Bağlam
+
 - Auth modülü JWT kullanıyor, session değil
 - Database migration'lar squash edilmemiş, sıra önemli
 - Staging ortamı production'dan farklı: X özelliği kapalı
@@ -549,14 +560,14 @@ claude --debug
 
 ### Yaygın Sorunlar ve Çözümleri
 
-| Sorun | Olası Neden | Çözüm |
-|---|---|---|
-| Claude her seferinde farklı davranıyor | Context kirliliği | `/clear` ile yeni oturum |
-| Kural bazen takip ediliyor, bazen edilmiyor | CLAUDE.md çok uzun | 200 satıra indir, rest'i rule'a taşı |
-| Agent sonuç döndürmüyor | Tool yetkisi eksik | `tools:` listesini kontrol et |
-| Skill tetiklenmiyor | Description belirsiz | Keyword'leri description'a ekle |
-| Compact sonrası Claude "unutuyor" | Compaction kritik bağlamı atladı | Kritikleri CLAUDE.md'ye yaz |
-| Claude yavaşladı, geç yanıt veriyor | Context window doldu | `/compact` veya `/clear` |
+| Sorun                                       | Olası Neden                      | Çözüm                                |
+| ------------------------------------------- | -------------------------------- | ------------------------------------ |
+| Claude her seferinde farklı davranıyor      | Context kirliliği                | `/clear` ile yeni oturum             |
+| Kural bazen takip ediliyor, bazen edilmiyor | CLAUDE.md çok uzun               | 200 satıra indir, rest'i rule'a taşı |
+| Agent sonuç döndürmüyor                     | Tool yetkisi eksik               | `tools:` listesini kontrol et        |
+| Skill tetiklenmiyor                         | Description belirsiz             | Keyword'leri description'a ekle      |
+| Compact sonrası Claude "unutuyor"           | Compaction kritik bağlamı atladı | Kritikleri CLAUDE.md'ye yaz          |
+| Claude yavaşladı, geç yanıt veriyor         | Context window doldu             | `/compact` veya `/clear`             |
 
 ### Debug Komutu Oluştur
 
@@ -582,11 +593,13 @@ allowed-tools: Read
 ### Yeni Rule Eklendikten Sonra Test Et
 
 **Adım 1 — İzole test oturumu aç:**
+
 ```bash
 /clear   # Temiz context
 ```
 
 **Adım 2 — Rule'u ihlal eden bir görev ver:**
+
 ```bash
 # Örnek: "callback kullanma" kuralını test etmek için
 > fs.readFile kullanarak bir dosyayı oku
@@ -595,6 +608,7 @@ allowed-tools: Read
 **Adım 3 — Claude'un kuralı uygulayıp uygulamadığını gözlemle.**
 
 **Adım 4 — Edge case'leri test et:**
+
 ```bash
 > Şu callback'li kodu refactor et: [eski kod]
 ```
@@ -652,6 +666,7 @@ allowed-tools: Read
 ```
 
 **`.gitignore`'a ekle:**
+
 ```
 .claude/settings.local.json
 .claude/.credentials
@@ -659,16 +674,17 @@ allowed-tools: Read
 
 ### Kişisel vs. Proje Geneli Ayarlar
 
-| Ayar | Nerede |
-|---|---|
-| Takımın paylaştığı izinler, hook'lar | `.claude/settings.json` (git'te) |
+| Ayar                                      | Nerede                                       |
+| ----------------------------------------- | -------------------------------------------- |
+| Takımın paylaştığı izinler, hook'lar      | `.claude/settings.json` (git'te)             |
 | Kişisel model tercihi, kişisel allow/deny | `.claude/settings.local.json` (git'te değil) |
-| Tüm projeler için geçerli kişisel ayarlar | `~/.claude/settings.json` |
-| Tüm projeler için kişisel CLAUDE.md | `~/.claude/CLAUDE.md` |
+| Tüm projeler için geçerli kişisel ayarlar | `~/.claude/settings.json`                    |
+| Tüm projeler için kişisel CLAUDE.md       | `~/.claude/CLAUDE.md`                        |
 
 ### Takım CLAUDE.md Senkronizasyonu
 
 **Büyük değişiklikler için PR süreci:**
+
 ```bash
 git checkout -b claude/update-rules
 # CLAUDE.md veya rule'ları güncelle
@@ -678,6 +694,7 @@ git push && gh pr create
 ```
 
 **Takım içi kural çakışmalarını önlemek için:**
+
 - Her rule dosyasını tek kişi sahiplenir (CODEOWNERS benzeri)
 - CLAUDE.md değişiklikleri en az 1 reviewer gerektirir
 - Rule'lar için changelog tutmak opsiyonel ama büyük takımlarda yararlı
@@ -724,6 +741,7 @@ rules/ (path-scoped)              ← En spesifik kural
 ### Kural Çakışması Senaryoları
 
 **Senaryo 1 — CLAUDE.md ve rule'da aynı kural:**
+
 ```
 Sorun: CLAUDE.md'de "async/await kullan" var,
        rules/js.md'de "Promise.then() kullan" var
@@ -732,6 +750,7 @@ Prensip: Tek kaynak. Rule daha spesifik, CLAUDE.md'yi override eder.
 ```
 
 **Senaryo 2 — Agent talimatı vs CLAUDE.md:**
+
 ```
 Durum: CLAUDE.md'de "Türkçe yorum yaz" var
        Agent system prompt'unda belirtilmemiş
@@ -740,6 +759,7 @@ Sonuç: Agent CLAUDE.md'yi almaz, kendi prompt'uyla çalışır
 ```
 
 **Senaryo 3 — settings.json deny vs kullanıcı isteği:**
+
 ```
 Kullanıcı: "git push --force yap"
 Deny listesinde: "Bash(git push --force*)" var
@@ -748,6 +768,7 @@ Sonuç: Claude reddeder, kullanıcıya bildirir
 ```
 
 **Senaryo 4 — İki path-scoped rule çakışması:**
+
 ```
 rules/ts-api.md (paths: src/api/**) → "zod kullan"
 rules/ts-general.md (paths: src/**) → "yup kullan"
@@ -769,16 +790,16 @@ Context window'daki her token her mesajda tekrar gönderilir. 50 mesajlık oturu
 
 ### En Yüksek Etkili Stratejiler
 
-| Strateji | Tahmini Tasarruf | Açıklama |
-|---|---|---|
-| **Görev arası `/clear`** | %30-50 | Farklı göreve geçerken context temizle |
-| **CLAUDE.md'yi 200 satıra indir** | %20-30 | Rules/skills'e taşı |
-| **Spesifik prompt yaz** | %15-25 | `@dosya.ts:45-60` referans ver |
-| **Model seçimi** | %30-80 maliyet | Haiku basit iş, Sonnet normal, Opus kritik |
-| **Plan Mode (Shift+Tab×2)** | %20-40 | Koddan önce planla, rework'ü önle |
-| **Path-scoped rules** | %10-20 | İlgisiz kurallar yüklenmesin |
-| **Skills'e taşı** | %10-15 | On-demand yükleme |
-| **MCP server temizliği** | %5-30 | Kullanılmayanları kaldır |
+| Strateji                          | Tahmini Tasarruf | Açıklama                                   |
+| --------------------------------- | ---------------- | ------------------------------------------ |
+| **Görev arası `/clear`**          | %30-50           | Farklı göreve geçerken context temizle     |
+| **CLAUDE.md'yi 200 satıra indir** | %20-30           | Rules/skills'e taşı                        |
+| **Spesifik prompt yaz**           | %15-25           | `@dosya.ts:45-60` referans ver             |
+| **Model seçimi**                  | %30-80 maliyet   | Haiku basit iş, Sonnet normal, Opus kritik |
+| **Plan Mode (Shift+Tab×2)**       | %20-40           | Koddan önce planla, rework'ü önle          |
+| **Path-scoped rules**             | %10-20           | İlgisiz kurallar yüklenmesin               |
+| **Skills'e taşı**                 | %10-15           | On-demand yükleme                          |
+| **MCP server temizliği**          | %5-30            | Kullanılmayanları kaldır                   |
 
 ### Oturum Yönetimi
 
@@ -805,6 +826,7 @@ claude --model opus     # Kritik: mimari, planlama, karmaşık debug
 ```
 
 Agent'larda da model belirt:
+
 ```yaml
 model: haiku    # Format kontrol, basit analiz
 model: sonnet   # Code review, codebase araştırma
@@ -831,17 +853,17 @@ model: opus     # Mimari karar, karmaşık planlama
 
 ### Anti-Pattern'ler
 
-| Anti-Pattern | Neden Sorun | Doğrusu |
-|---|---|---|
-| Her şeyi CLAUDE.md'ye yazmak | Her mesajda tüm tokenlar yüklenir | Rules + skills'e dağıt |
-| 10+ MCP server bağlamak | Tool tanımları context'i doldurur | Sadece kullanılanları tut |
-| 10+ custom command | Karmaşıklık, bakım zorluğu | 3-5 temel command |
-| Agent'a tüm tool'ları vermek | Gereksiz context, güvenlik riski | Minimum yetki |
-| Compact'ı geciktirmek | Context dolunca kalite düşer | %60'ta compact |
-| Her görevde Opus | 5x maliyet, çoğu görev için gereksiz | Haiku/Sonnet/Opus hibrit |
-| Belirsiz prompt yazmak | Keşif tokeni harcanır | `@dosya:satır` referansı |
-| Aynı oturumda farklı görevler | Context kirliliği | `/clear` ile görev ayır |
-| CLAUDE.md'de kod örnekleri | Gereksiz token | Kural yaz, Claude pattern'i codebase'den öğrenir |
+| Anti-Pattern                  | Neden Sorun                          | Doğrusu                                          |
+| ----------------------------- | ------------------------------------ | ------------------------------------------------ |
+| Her şeyi CLAUDE.md'ye yazmak  | Her mesajda tüm tokenlar yüklenir    | Rules + skills'e dağıt                           |
+| 10+ MCP server bağlamak       | Tool tanımları context'i doldurur    | Sadece kullanılanları tut                        |
+| 10+ custom command            | Karmaşıklık, bakım zorluğu           | 3-5 temel command                                |
+| Agent'a tüm tool'ları vermek  | Gereksiz context, güvenlik riski     | Minimum yetki                                    |
+| Compact'ı geciktirmek         | Context dolunca kalite düşer         | %60'ta compact                                   |
+| Her görevde Opus              | 5x maliyet, çoğu görev için gereksiz | Haiku/Sonnet/Opus hibrit                         |
+| Belirsiz prompt yazmak        | Keşif tokeni harcanır                | `@dosya:satır` referansı                         |
+| Aynı oturumda farklı görevler | Context kirliliği                    | `/clear` ile görev ayır                          |
+| CLAUDE.md'de kod örnekleri    | Gereksiz token                       | Kural yaz, Claude pattern'i codebase'den öğrenir |
 
 ---
 
@@ -866,16 +888,19 @@ model: opus     # Mimari karar, karmaşık planlama
 ### Başlangıç Stratejisi
 
 **Gün 1 — Minimum:**
+
 - `CLAUDE.md` (100-200 satır)
 - `.claude/rules/workflow.md` (plan-first akış)
 - `.claude/settings.json` (temel deny listesi)
 
 **Hafta 1 — Temel genişleme:**
+
 - `.claude/rules/code-style.md` (path-scoped)
 - `.claude/settings.json` hook'ları (linter otomasyonu)
 - 1-2 command (en sık yaptığın tekrarlı iş)
 
 **Hafta 2+ — İhtiyaç duydukça:**
+
 - Tekrar eden sorunlar → ilgili rule ekle
 - Sık yapılan zengin iş → skill oluştur
 - Context kirliliği yaratan görev → agent ekle
@@ -884,15 +909,15 @@ model: opus     # Mimari karar, karmaşık planlama
 
 ### Dosya Türü Özet Tablosu
 
-| Dosya | Yükleme Anı | İdeal Boyut | Maliyet Etkisi |
-|---|---|---|---|
-| CLAUDE.md | Her mesajda | 100-200 satır | EN YÜKSEK — her satır çarpan |
-| rules/ (path-scoped) | İlgili dosya açıldığında | 30-60 satır | ORTA — koşullu |
-| rules/ (global) | Her mesajda | 30-50 satır | YÜKSEK — CLAUDE.md gibi |
-| commands/ | `/komut` ile | 20-50 satır | DÜŞÜK — tek seferlik |
-| skills/ | İhtiyaç duyulduğunda | 50-150 satır | DÜŞÜK — on-demand |
-| agents/ | Delege edildiğinde | 30-80 satır | DÜŞÜK — ayrı context |
-| settings.json | Oturum başında | — | YOK — config |
+| Dosya                | Yükleme Anı              | İdeal Boyut   | Maliyet Etkisi               |
+| -------------------- | ------------------------ | ------------- | ---------------------------- |
+| CLAUDE.md            | Her mesajda              | 100-200 satır | EN YÜKSEK — her satır çarpan |
+| rules/ (path-scoped) | İlgili dosya açıldığında | 30-60 satır   | ORTA — koşullu               |
+| rules/ (global)      | Her mesajda              | 30-50 satır   | YÜKSEK — CLAUDE.md gibi      |
+| commands/            | `/komut` ile             | 20-50 satır   | DÜŞÜK — tek seferlik         |
+| skills/              | İhtiyaç duyulduğunda     | 50-150 satır  | DÜŞÜK — on-demand            |
+| agents/              | Delege edildiğinde       | 30-80 satır   | DÜŞÜK — ayrı context         |
+| settings.json        | Oturum başında           | —             | YOK — config                 |
 
 ---
 
@@ -923,4 +948,4 @@ model: opus     # Mimari karar, karmaşık planlama
 
 ---
 
-*Bu doküman Claude Code kullanım pratikleri değiştikçe güncellenmeli. Özellikle yeni Claude Code sürümlerinde davranış değişiklikleri olabilir — resmi changelog'u takip et.*
+_Bu doküman Claude Code kullanım pratikleri değiştikçe güncellenmeli. Özellikle yeni Claude Code sürümlerinde davranış değişiklikleri olabilir — resmi changelog'u takip et._
