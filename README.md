@@ -3,6 +3,8 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Languages: EN / TR](https://img.shields.io/badge/Languages-EN%20%2F%20TR-blue.svg)](README.tr.md)
 
+**Language / Dil:** English | [Türkçe](README.tr.md)
+
 > A practical reference for developers on how to use Claude Code effectively — covering file type selection, cost optimization, security, error recovery, and team workflow.
 
 ---
@@ -17,23 +19,23 @@ The guide covers six core file types (`CLAUDE.md`, `rules/`, `commands/`, `skill
 
 ## Contents
 
-| #   | Topic                                             |
-| --- | ------------------------------------------------- |
-| 1   | [CLAUDE.md — The Project Constitution](#)         |
-| 2   | [Rules — Conditionally Loaded Instructions](#)    |
-| 3   | [Commands — Manually Triggered Workflows](#)      |
-| 4   | [Skills — On-Demand Expertise](#)                 |
-| 5   | [Agents — Specialists in Separate Contexts](#)    |
-| 6   | [settings.json — Permissions and Automations](#)  |
-| 7   | [Security — Secrets and Permission Management](#) |
-| 8   | [Error Recovery and Checkpoint Strategy](#)       |
-| 9   | [Debugging and Troubleshooting](#)                |
-| 10  | [Testing and Validation](#)                       |
-| 11  | [Versioning and Team Workflow](#)                 |
-| 12  | [Conflict Resolution Rules](#)                    |
-| 13  | [Cost Optimization — Token = Money](#)            |
-| 14  | [General Architecture Decisions](#)               |
-| 15  | [Resources and References](#)                     |
+| #   | Topic                                                                                                                                                       |
+| --- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 1   | [CLAUDE.md — The Project Constitution](claude-code-efficiency-guide.md#1-claudemd--the-project-constitution)                                               |
+| 2   | [Rules — Conditionally Loaded Instructions](claude-code-efficiency-guide.md#2-rules--conditionally-loaded-instructions)                                    |
+| 3   | [Commands — Manually Triggered Workflows](claude-code-efficiency-guide.md#3-commands--manually-triggered-workflows)                                        |
+| 4   | [Skills — On-Demand Expertise](claude-code-efficiency-guide.md#4-skills--on-demand-expertise)                                                              |
+| 5   | [Agents — Specialists in Separate Contexts](claude-code-efficiency-guide.md#5-agents--specialists-running-in-separate-contexts)                            |
+| 6   | [settings.json — Permissions and Automations](claude-code-efficiency-guide.md#6-settingsjson--permissions-and-automations)                                 |
+| 7   | [Security — Secrets and Permission Management](claude-code-efficiency-guide.md#7-security--secrets-and-permission-management)                              |
+| 8   | [Error Recovery and Checkpoint Strategy](claude-code-efficiency-guide.md#8-error-recovery-and-checkpoint-strategy)                                         |
+| 9   | [Debugging and Troubleshooting](claude-code-efficiency-guide.md#9-debugging-and-troubleshooting)                                                           |
+| 10  | [Testing and Validation](claude-code-efficiency-guide.md#10-testing-and-validation)                                                                        |
+| 11  | [Versioning and Team Workflow](claude-code-efficiency-guide.md#11-versioning-and-team-workflow)                                                             |
+| 12  | [Conflict Resolution Rules](claude-code-efficiency-guide.md#12-conflict-resolution-rules)                                                                  |
+| 13  | [Cost Optimization — Token = Money](claude-code-efficiency-guide.md#13-cost-optimization--token--money)                                                    |
+| 14  | [General Architecture Decisions](claude-code-efficiency-guide.md#14-general-architecture-decisions)                                                        |
+| 15  | [Resources and References](claude-code-efficiency-guide.md#15-resources-and-references)                                                                    |
 
 ---
 
@@ -109,11 +111,21 @@ Not sure where something belongs? Use this tree:
 ## Files in This Repository
 
 ```
+├── .github/
+│   ├── ISSUE_TEMPLATE/
+│   │   ├── bug_report.md                      # Bug report template
+│   │   └── feature_request.md                 # Feature request template
+│   └── pull_request_template.md               # PR checklist (bilingual)
+├── CHANGELOG.md                               # Release history (Keep a Changelog)
 ├── CLAUDE.md                                  # Claude Code guidance for this repo
-├── claude-code-efficiency-guide.md            # Full guide (English)
-├── claude-code-verimli-kullanim-rehberi.md    # Full guide (Turkish)
+├── CODE_OF_CONDUCT.md                         # Contributor Covenant v2.1
+├── CONTRIBUTING.md                            # Contribution guidelines
+├── LICENSE                                    # MIT License
 ├── README.md                                  # This file (English)
-└── README.tr.md                               # Turkish README
+├── README.tr.md                               # Turkish README
+├── SECURITY.md                                # Vulnerability reporting policy
+├── claude-code-efficiency-guide.md            # Full guide (English)
+└── claude-code-verimli-kullanim-rehberi.md    # Full guide (Turkish)
 ```
 
 ---

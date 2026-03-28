@@ -1,0 +1,9 @@
+# Normalize line endings for all text files
+* text=auto
+
+# Explicitly declare Markdown as text
+*.md text eol=lf
+
+# Ensure YAML files use LF
+*.yml text eol=lf
+*.yaml text eol=lf

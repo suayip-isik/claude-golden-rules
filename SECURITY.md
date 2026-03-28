@@ -8,8 +8,9 @@ unsafe, or misleading guidance.
 
 ## Reporting a Vulnerability
 
-If you identify a security issue in the repository content, please open an issue:
-https://github.com/suayip-isik/claude-golden-rules/issues
+If you identify a security issue in the repository content, please report it
+**privately** by emailing **suayip.isik.16@gmail.com** — do not open a public
+GitHub issue, as this could expose others to harm before a correction is made.
 
 When reporting, include:
 

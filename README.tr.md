@@ -1,5 +1,10 @@
 # Claude Code — Verimli Kullanım Rehberi
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Languages: EN / TR](https://img.shields.io/badge/Languages-EN%20%2F%20TR-blue.svg)](README.md)
+
+**Language / Dil:** [English](README.md) | Türkçe
+
 > Geliştiriciler için pratik bir başvuru kaynağı: dosya türü seçimi, maliyet optimizasyonu, güvenlik, hata yönetimi ve takım workflow'u.
 
 ---
@@ -14,23 +19,23 @@ Rehber; altı temel dosya türünü (`CLAUDE.md`, `rules/`, `commands/`, `skills
 
 ## İçindekiler
 
-| #   | Konu                                           |
-| --- | ---------------------------------------------- |
-| 1   | [CLAUDE.md — Projenin Anayasası](#)            |
-| 2   | [Rules — Koşullu Yüklenen Kurallar](#)         |
-| 3   | [Commands — Manuel Tetiklenen İş Akışları](#)  |
-| 4   | [Skills — On-Demand Yüklenen Uzmanlıklar](#)   |
-| 5   | [Agents — Ayrı Context'te Çalışan Uzmanlar](#) |
-| 6   | [settings.json — İzinler ve Otomasyonlar](#)   |
-| 7   | [Güvenlik — Secrets ve İzin Yönetimi](#)       |
-| 8   | [Hata Recovery ve Checkpoint Stratejisi](#)    |
-| 9   | [Debugging ve Troubleshooting](#)              |
-| 10  | [Test ve Doğrulama](#)                         |
-| 11  | [Versiyonlama ve Takım Workflow'u](#)          |
-| 12  | [Çakışma Çözüm Kuralları](#)                   |
-| 13  | [Maliyet Optimizasyonu — Token = Para](#)      |
-| 14  | [Genel Mimari Kararlar](#)                     |
-| 15  | [Kaynaklar ve Referanslar](#)                  |
+| #   | Konu                                                                                                                                                                          |
+| --- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 1   | [CLAUDE.md — Projenin Anayasası](claude-code-verimli-kullanim-rehberi.md#1-claudemd--projenin-anayasası)                                                                    |
+| 2   | [Rules — Koşullu Yüklenen Kurallar](claude-code-verimli-kullanim-rehberi.md#2-rules--koşullu-yüklenen-kurallar)                                                             |
+| 3   | [Commands — Manuel Tetiklenen İş Akışları](claude-code-verimli-kullanim-rehberi.md#3-commands--manuel-tetiklenen-iş-akışları)                                               |
+| 4   | [Skills — On-Demand Yüklenen Uzmanlıklar](claude-code-verimli-kullanim-rehberi.md#4-skills--on-demand-yüklenen-uzmanlıklar)                                                 |
+| 5   | [Agents — Ayrı Context'te Çalışan Uzmanlar](claude-code-verimli-kullanim-rehberi.md#5-agents--ayrı-contextte-çalışan-uzmanlar)                                              |
+| 6   | [settings.json — İzinler ve Otomasyonlar](claude-code-verimli-kullanim-rehberi.md#6-settingsjson--i̇zinler-ve-otomasyonlar)                                                 |
+| 7   | [Güvenlik — Secrets ve İzin Yönetimi](claude-code-verimli-kullanim-rehberi.md#7-güvenlik--secrets-ve-i̇zin-yönetimi)                                                        |
+| 8   | [Hata Recovery ve Checkpoint Stratejisi](claude-code-verimli-kullanim-rehberi.md#8-hata-recovery-ve-checkpoint-stratejisi)                                                  |
+| 9   | [Debugging ve Troubleshooting](claude-code-verimli-kullanim-rehberi.md#9-debugging-ve-troubleshooting)                                                                      |
+| 10  | [Test ve Doğrulama](claude-code-verimli-kullanim-rehberi.md#10-test-ve-doğrulama)                                                                                           |
+| 11  | [Versiyonlama ve Takım Workflow'u](claude-code-verimli-kullanim-rehberi.md#11-versiyonlama-ve-takım-workflowu)                                                              |
+| 12  | [Çakışma Çözüm Kuralları](claude-code-verimli-kullanim-rehberi.md#12-çakışma-çözüm-kuralları)                                                                              |
+| 13  | [Maliyet Optimizasyonu — Token = Para](claude-code-verimli-kullanim-rehberi.md#13-maliyet-optimizasyonu--token--para)                                                       |
+| 14  | [Genel Mimari Kararlar](claude-code-verimli-kullanim-rehberi.md#14-genel-mimari-kararlar)                                                                                   |
+| 15  | [Kaynaklar ve Referanslar](claude-code-verimli-kullanim-rehberi.md#15-kaynaklar-ve-referanslar)                                                                             |
 
 ---
 
@@ -106,11 +111,21 @@ Bir şeyin nereye ait olduğundan emin değil misin? Bu ağacı kullan:
 ## Bu Repodaki Dosyalar
 
 ```
+├── .github/
+│   ├── ISSUE_TEMPLATE/
+│   │   ├── bug_report.md                      # Hata raporu şablonu
+│   │   └── feature_request.md                 # Özellik isteği şablonu
+│   └── pull_request_template.md               # PR kontrol listesi (iki dilli)
+├── CHANGELOG.md                               # Sürüm geçmişi (Keep a Changelog)
 ├── CLAUDE.md                                  # Bu repo için Claude Code rehberi
-├── claude-code-efficiency-guide.md            # Tam rehber (İngilizce)
-├── claude-code-verimli-kullanim-rehberi.md    # Tam rehber (Türkçe)
+├── CODE_OF_CONDUCT.md                         # Davranış kuralları (Contributor Covenant v2.1)
+├── CONTRIBUTING.md                            # Katkı kılavuzu
+├── LICENSE                                    # MIT Lisansı
 ├── README.md                                  # İngilizce README
-└── README.tr.md                               # Bu dosya (Türkçe)
+├── README.tr.md                               # Bu dosya (Türkçe)
+├── SECURITY.md                                # Güvenlik açığı bildirimi politikası
+├── claude-code-efficiency-guide.md            # Tam rehber (İngilizce)
+└── claude-code-verimli-kullanim-rehberi.md    # Tam rehber (Türkçe)
 ```
 
 ---
