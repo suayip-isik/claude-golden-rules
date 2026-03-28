@@ -109,10 +109,11 @@ Not sure where something belongs? Use this tree:
 ## Files in This Repository
 
 ```
-├── claude-code-efficiency-guide.md   # Full guide (English)
-├── claude-code-verimli-kullanim-rehberi.md  # Full guide (Turkish)
-├── README.md                         # This file (English)
-└── README.tr.md                      # Turkish README
+├── CLAUDE.md                                  # Claude Code guidance for this repo
+├── claude-code-efficiency-guide.md            # Full guide (English)
+├── claude-code-verimli-kullanim-rehberi.md    # Full guide (Turkish)
+├── README.md                                  # This file (English)
+└── README.tr.md                               # Turkish README
 ```
 
 ---

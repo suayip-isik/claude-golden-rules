@@ -106,10 +106,11 @@ Bir şeyin nereye ait olduğundan emin değil misin? Bu ağacı kullan:
 ## Bu Repodaki Dosyalar
 
 ```
-├── claude-code-efficiency-guide.md      # Tam rehber (İngilizce)
-├── claude-code-verimli-kullanim-rehberi.md  # Tam rehber (Türkçe)
-├── README.md                            # İngilizce README
-└── README.tr.md                         # Bu dosya (Türkçe)
+├── CLAUDE.md                                  # Bu repo için Claude Code rehberi
+├── claude-code-efficiency-guide.md            # Tam rehber (İngilizce)
+├── claude-code-verimli-kullanim-rehberi.md    # Tam rehber (Türkçe)
+├── README.md                                  # İngilizce README
+└── README.tr.md                               # Bu dosya (Türkçe)
 ```
 
 ---

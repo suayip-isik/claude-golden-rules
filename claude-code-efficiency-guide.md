@@ -30,7 +30,7 @@ For general developer audiences: file type selection, cost optimization, securit
 
 **Write only universal information.** CLAUDE.md is loaded into context at the start of every session, with every message. Every line inside has a multiplier effect — in a 50-message session, each line is read 50 times.
 
-**Keep it short.** Anthropic officially recommends ~500 lines as the upper limit. In practice, 100–200 lines is ideal. Research shows LLMs can consistently follow ~150–200 instructions; Claude Code's own system prompt already contains ~50 instructions.
+**Keep it short.** Anthropic's official recommendation is **under 200 lines**. Longer files still load in full but instruction-following quality drops. Research shows LLMs can consistently follow ~150–200 instructions; Claude Code's own system prompt already contains ~50 instructions.
 
 **Don't do the linter's job.** Rules like "use 2-space indentation" or "add semicolons" do not belong in CLAUDE.md. ESLint/Prettier/Stylelint do this more reliably and for free. Claude cannot follow these rules 100% of the time — linters can.
 
@@ -68,11 +68,22 @@ For general developer audiences: file type selection, cost optimization, securit
 5-10 items — things that must NEVER be done
 ```
 
+### Importing Files
+
+Use `@path/to/file` inside CLAUDE.md to pull in external content on demand. Imports are resolved recursively up to **5 hops**.
+
+```markdown
+@docs/api-conventions.md
+@.claude/rules/security.md
+```
+
+This is useful for keeping CLAUDE.md short while still referencing detailed reference documents.
+
 ### Common Mistakes
 
 | Mistake                                    | Why It's a Problem                               | Fix                                  |
 | ------------------------------------------ | ------------------------------------------------ | ------------------------------------ |
-| 500+ lines, everything in one place        | Instruction-following quality drops, token waste | Move to rules/skills                 |
+| 200+ lines, everything in one place        | Instruction-following quality drops, token waste | Move to rules/skills                 |
 | Writing code examples                      | Bloats context, Claude already knows             | Just write the rule                  |
 | Writing linter rules                       | Cannot be followed 100%, wasteful                | Use `.eslintrc`                      |
 | Table of contents, emoji headings          | Unnecessary token consumption                    | Plain markdown                       |
@@ -127,7 +138,7 @@ paths:
 
 ### Golden Rules
 
-**Use `$ARGUMENTS`.** Makes the command parametric. Enables specifying a file like `/review src/index.ts`.
+**Use `$ARGUMENTS`.** Makes the command parametric. Enables specifying a file like `/review src/index.ts`. Use `$ARGUMENTS[N]` or `$N` to access individual arguments by index (e.g., `$1` for the first argument).
 
 **Restrict permissions with `allowed-tools`.** Do not grant `Write` or `Edit` to a read-only review command. Grant them only if modifications are needed.
 
@@ -148,6 +159,8 @@ Run these steps:
 3. git tag -a v$ARGUMENTS -m "Release $ARGUMENTS"
 4. git push origin v$ARGUMENTS
 ```
+
+**Use `user-invocable: false` to hide commands from the menu.** Commands with this flag can only be triggered by Claude automatically — they won't appear in the `/` autocomplete list.
 
 **Keep it short and focused.** 20–50 lines is ideal. A command tells Claude "what to do" — no need to explain "why".
 
@@ -186,7 +199,7 @@ Run these steps:
     └── design-tokens.json
 ```
 
-**Make the `description` field precise and specific.** Claude uses this description to decide when to trigger the skill. A vague description = wrong trigger or no trigger at all.
+**Make the `description` field precise and specific.** Claude uses this description to decide when to trigger the skill. A vague description = wrong trigger or no trigger at all. **The description is capped at 250 characters** — be concise.
 
 ```yaml
 # ❌ Bad
@@ -213,10 +226,27 @@ description: Creates a new React component with TypeScript, a Storybook story, a
 
 ### Common Mistakes
 
+### Key Frontmatter Fields
+
+| Field                      | Purpose                                                    |
+| -------------------------- | ---------------------------------------------------------- |
+| `description`              | When Claude auto-triggers this skill (max 250 chars)       |
+| `allowed-tools`            | Tools available without additional permission prompt       |
+| `disable-model-invocation` | `true` = manual `/invocation` only, never auto-triggered   |
+| `user-invocable: false`    | Hidden from `/` menu; only Claude can invoke it            |
+| `context: fork`            | Run in a forked subagent context (isolated context window) |
+| `argument-hint`            | Autocomplete hint shown after the command name             |
+| `model`                    | Override the model for this skill                          |
+| `effort`                   | `low` / `medium` / `high` / `max`                          |
+| `paths`                    | Glob patterns — skill activates only for matching files    |
+
+### Common Mistakes
+
 | Mistake                                  | Fix                                             |
 | ---------------------------------------- | ----------------------------------------------- |
 | Writing large references inside SKILL.md | Put in a separate file; reference from SKILL.md |
 | Vague description                        | Write specifically; include trigger keywords    |
+| Description over 250 characters          | Hard-capped; excess text is silently truncated  |
 | Defining too many skills                 | Each skill's metadata consumes ~100 tokens      |
 
 ---
@@ -278,9 +308,31 @@ Return the analysis in this format:
 Top-priority action item.
 ```
 
+### Key Frontmatter Fields
+
+| Field             | Purpose                                                              |
+| ----------------- | -------------------------------------------------------------------- |
+| `name`            | Lowercase letters/hyphens only, max 64 chars (required)              |
+| `description`     | When Claude delegates to this agent (required)                       |
+| `tools`           | Allowlist — only these tools are available                           |
+| `disallowedTools` | Denylist — inherit all tools except these                            |
+| `model`           | `haiku` / `sonnet` / `opus` / full model ID / `inherit`              |
+| `permissionMode`  | `default` / `acceptEdits` / `dontAsk` / `bypassPermissions` / `plan` |
+| `maxTurns`        | Stop the agent after this many agentic turns                         |
+| `background`      | `true` = run concurrently without blocking the main session          |
+| `effort`          | `low` / `medium` / `high` / `max`                                    |
+| `isolation`       | `worktree` = run in an isolated git worktree                         |
+| `initialPrompt`   | Auto-submitted as the first turn when the agent starts               |
+| `memory`          | Persistent memory scope: `user` / `project` / `local`                |
+| `hooks`           | Lifecycle hooks scoped to this agent                                 |
+| `mcpServers`      | MCP servers available to this agent                                  |
+| `skills`          | Preloaded skills for this agent                                      |
+
 ### Parallel Agent Use
 
 Multiple agents can be triggered simultaneously for independent tasks. The main session waits for each result and merges them. Example: run both a `schema-analyzer` and a `dependency-checker` agent in parallel before a migration.
+
+> **Note:** Agents cannot spawn other agents. Nesting is not supported — only the main session can delegate to an agent.
 
 ### When to Use an Agent vs a Command
 
@@ -300,6 +352,7 @@ Multiple agents can be triggered simultaneously for independent tasks. The main 
 | Using a common name                     | Use a unique, project-specific name                               |
 | Re-writing CLAUDE.md rules in the agent | Agents get their own system prompt; they do not receive CLAUDE.md |
 | Not specifying an output format         | Ask it to return in a format the main session can process         |
+| Agent trying to spawn another agent     | Nesting is not supported; only the main session can delegate      |
 
 ---
 
@@ -330,7 +383,7 @@ Multiple agents can be triggered simultaneously for independent tasks. The main 
 }
 ```
 
-**Lower the auto-compact threshold.** The default of 95% is too late. 60% keeps context cleaner.
+**Lower the auto-compact threshold.** 60% keeps context cleaner than the default.
 
 ```json
 {
@@ -340,7 +393,9 @@ Multiple agents can be triggered simultaneously for independent tasks. The main 
 }
 ```
 
-**Adjust the thinking token budget.** The default is 32K tokens. For simple tasks, 8–10K is enough.
+> ⚠️ `CLAUDE_AUTOCOMPACT_PCT_OVERRIDE` is not listed in the official documentation. Use at your own risk — behavior may change with future Claude Code releases.
+
+**Adjust the thinking token budget.** For simple tasks, a lower budget reduces cost.
 
 ```json
 {
@@ -349,6 +404,8 @@ Multiple agents can be triggered simultaneously for independent tasks. The main 
   }
 }
 ```
+
+> ⚠️ `MAX_THINKING_TOKENS` is not listed in the official documentation. Use at your own risk — behavior may change with future Claude Code releases.
 
 **Add deterministic control with hooks.** Automatically run the linter after every edit.
 
@@ -495,6 +552,8 @@ To reverse a single tool call in Claude Code:
 
 To undo multiple steps, `/undo` cannot be chained — use `git checkout` in that case.
 
+> **Note:** `/undo` is not listed among the official bundled skills. Availability may vary across Claude Code versions; prefer `git reset` for reliable rollback.
+
 ### Recovery When Context Is Corrupted
 
 If Claude starts behaving inconsistently during a long session:
@@ -550,12 +609,11 @@ Rule was not followed
 ### Check Whether a Rule Is Being Loaded
 
 ```bash
-# View context contents in Claude Code
-/context
-
 # To see which rules are loaded, start in debug mode
 claude --debug
 ```
+
+> **Note:** `/context` and `/undo` are not listed among the official bundled skills (`/batch`, `/claude-api`, `/debug`, `/loop`, `/simplify`). Availability of these commands may vary across Claude Code versions.
 
 ### Common Issues and Solutions
 
@@ -673,12 +731,13 @@ Check and report the following:
 
 ### Personal vs. Project-Wide Settings
 
-| Setting                                        | Where                                      |
-| ---------------------------------------------- | ------------------------------------------ |
-| Shared team permissions and hooks              | `.claude/settings.json` (in git)           |
-| Personal model preference, personal allow/deny | `.claude/settings.local.json` (not in git) |
-| Personal settings for all projects             | `~/.claude/settings.json`                  |
-| Personal CLAUDE.md for all projects            | `~/.claude/CLAUDE.md`                      |
+| Setting                                        | Where                                                   |
+| ---------------------------------------------- | ------------------------------------------------------- |
+| Shared team permissions and hooks              | `.claude/settings.json` (in git)                        |
+| Personal model preference, personal allow/deny | `.claude/settings.local.json` (not in git)              |
+| Personal settings for all projects             | `~/.claude/settings.json`                               |
+| Personal CLAUDE.md for all projects            | `~/.claude/CLAUDE.md`                                   |
+| Project CLAUDE.md (alternative location)       | `.claude/CLAUDE.md` (equivalent to `CLAUDE.md` in root) |
 
 ### Team CLAUDE.md Synchronization
 
@@ -706,7 +765,7 @@ git clone <repo>
 cd <project>
 
 # Install Claude Code (see Resources)
-npm install -g @anthropic-ai/claude-code
+curl -fsSL https://claude.ai/install.sh | bash   # macOS / Linux / WSL
 
 # Create personal settings
 cp .claude/settings.json .claude/settings.local.json
@@ -943,7 +1002,7 @@ model: opus     # Architecture decisions, complex planning
 ### Attributions in This Document
 
 - Shrivu Shankar (Anthropic engineer) — comment on the slash command anti-pattern
-- Anthropic official recommendation — ~500 line upper limit for CLAUDE.md
+- Anthropic official recommendation — under 200 lines for CLAUDE.md
 - LLM instruction-following research — ~150–200 consistent-follow threshold
 
 ---

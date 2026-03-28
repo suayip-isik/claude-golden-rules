@@ -30,7 +30,7 @@ Genel geliştirici kitlesine yönelik; dosya türü seçimi, maliyet optimizasyo
 
 **Yalnızca evrensel bilgileri yaz.** CLAUDE.md her oturum başında, her mesajda context'e yüklenir. İçindeki her satır çarpan etkisi yaratır — 50 mesajlık bir oturumda her satır 50 kez okunur.
 
-**Kısa tut.** Anthropic resmi olarak ~500 satırı üst sınır önerir. Pratikte 100-200 satır idealdir. Araştırmalar, LLM'lerin ~150-200 talimatı tutarlı takip edebildiğini gösterir; Claude Code'un kendi sistem prompt'u zaten ~50 talimat içerir.
+**Kısa tut.** Anthropic'in resmi önerisi **200 satırın altıdır**. Daha uzun dosyalar tam yüklenir ancak talimat takip kalitesi düşer. Araştırmalar, LLM'lerin ~150-200 talimatı tutarlı takip edebildiğini gösterir; Claude Code'un kendi sistem prompt'u zaten ~50 talimat içerir.
 
 **Linter'ın işini yaptırma.** "2 space indent kullan", "noktalı virgül koy" gibi kurallar CLAUDE.md'ye yazılmamalı. ESLint/Prettier/Stylelint bu işi daha güvenilir ve bedavaya yapar. Claude bu kuralları %100 takip edemez, linter eder.
 
@@ -68,11 +68,22 @@ Genel geliştirici kitlesine yönelik; dosya türü seçimi, maliyet optimizasyo
 5-10 madde — ASLA yapılmaması gerekenler
 ```
 
+### Dosya İçe Aktarma (Import)
+
+CLAUDE.md içinde `@path/to/dosya` sözdizimini kullanarak harici içeriği isteğe bağlı olarak çekebilirsin. İçe aktarmalar özyinelemeli olarak çözülür, **maksimum 5 seviye** derinliğe kadar.
+
+```markdown
+@docs/api-conventions.md
+@.claude/rules/security.md
+```
+
+Bu özellik, detaylı referans belgelerini ayrı tutarken CLAUDE.md'yi kısa tutmak için kullanışlıdır.
+
 ### Yaygın Hatalar
 
 | Hata                                   | Neden Sorun                                | Çözüm                                  |
 | -------------------------------------- | ------------------------------------------ | -------------------------------------- |
-| 500+ satır, her şey bir arada          | Talimat takip kalitesi düşer, token israfı | Rules/skills'e taşı                    |
+| 200+ satır, her şey bir arada          | Talimat takip kalitesi düşer, token israfı | Rules/skills'e taşı                    |
 | Kod örnekleri yazma                    | Context şişer, Claude zaten biliyor        | Sadece kuralı yaz                      |
 | Linter kuralları yazma                 | %100 takip edilmez, israf                  | `.eslintrc` kullan                     |
 | İçindekiler tablosu, emoji başlıklar   | Gereksiz token tüketimi                    | Düz markdown                           |
@@ -127,7 +138,7 @@ paths:
 
 ### Altın Kurallar
 
-**`$ARGUMENTS` kullan.** Komutun parametrik olmasını sağlar. `/review src/index.ts` gibi dosya belirtme imkanı verir.
+**`$ARGUMENTS` kullan.** Komutun parametrik olmasını sağlar. `/review src/index.ts` gibi dosya belirtme imkanı verir. Tekil argümanlara `$ARGUMENTS[N]` veya `$N` sözdizimi ile erişilebilir (örn. `$1` ilk argüman için).
 
 **`allowed-tools` ile yetki sınırla.** Read-only review komutu için `Write`, `Edit` verme. Düzeltme yapacaksa ver.
 
@@ -148,6 +159,8 @@ allowed-tools: Bash
 3. git tag -a v$ARGUMENTS -m "Release $ARGUMENTS"
 4. git push origin v$ARGUMENTS
 ```
+
+**`user-invocable: false` ile komutu menüden gizle.** Bu flag olan komutlar yalnızca Claude tarafından otomatik olarak tetiklenebilir — `/` otomatik tamamlama listesinde görünmezler.
 
 **Kısa ve odaklı tut.** 20-50 satır ideal. Command, Claude'a "ne yapacağını" söyler — "neden"i açıklamana gerek yok.
 
@@ -186,7 +199,7 @@ allowed-tools: Bash
     └── design-tokens.json
 ```
 
-**`description` alanı kesin ve spesifik olsun.** Claude, skill'i tetiklemek için bu açıklamayı kullanır. Belirsiz açıklama = yanlış tetikleme veya hiç tetiklememe.
+**`description` alanı kesin ve spesifik olsun.** Claude, skill'i tetiklemek için bu açıklamayı kullanır. Belirsiz açıklama = yanlış tetikleme veya hiç tetiklememe. **Description maksimum 250 karakter** ile sınırlıdır — özlü yaz.
 
 ```yaml
 # ❌ Kötü
@@ -211,12 +224,27 @@ description: Yeni React bileşeni oluşturur. TypeScript, Storybook hikayesi ve 
 | Birden fazla adımlı, zengin iş akışı   | Basit checklist veya tek adım       |
 | Context'e on-demand yüklenir           | `/komut` ile çağrıldığında yüklenir |
 
+### Temel Frontmatter Alanları
+
+| Alan                       | Amaç                                                             |
+| -------------------------- | ---------------------------------------------------------------- |
+| `description`              | Claude'un skill'i ne zaman tetikleyeceği (maks. 250 karakter)    |
+| `allowed-tools`            | Ek izin istenmeden kullanılabilecek tool'lar                     |
+| `disable-model-invocation` | `true` = yalnızca manuel `/çağrı`, asla otomatik tetiklenmez     |
+| `user-invocable: false`    | `/` menüsünden gizlenir; yalnızca Claude çağırabilir             |
+| `context: fork`            | Ayrı bir subagent context'inde çalıştır                          |
+| `argument-hint`            | Komut adının yanında gösterilen otomatik tamamlama ipucu         |
+| `model`                    | Bu skill için model geçersiz kıl                                 |
+| `effort`                   | `low` / `medium` / `high` / `max`                                |
+| `paths`                    | Glob desenleri — yalnızca eşleşen dosyalar için skill etkinleşir |
+
 ### Yaygın Hatalar
 
 | Hata                               | Çözüm                                              |
 | ---------------------------------- | -------------------------------------------------- |
 | SKILL.md içine dev referans yazmak | Ayrı dosyaya koy, SKILL.md'den referans ver        |
 | Belirsiz description               | Spesifik yaz, tetikleme keyword'lerini dahil et    |
+| 250 karakteri aşan description     | Hard-cap; fazla metin sessizce kesilir             |
 | Çok fazla skill tanımlamak         | Her skill metadata'sı context tüketir (~100 token) |
 
 ---
@@ -278,9 +306,31 @@ Analizi şu formatta döndür:
 Öncelikli aksiyon maddesi.
 ```
 
+### Temel Frontmatter Alanları
+
+| Alan              | Amaç                                                                 |
+| ----------------- | -------------------------------------------------------------------- |
+| `name`            | Yalnızca küçük harf/kısa çizgi, maks. 64 karakter (zorunlu)          |
+| `description`     | Claude'un bu agent'a ne zaman delege edeceği (zorunlu)               |
+| `tools`           | İzin listesi — yalnızca bu tool'lar kullanılabilir                   |
+| `disallowedTools` | Yasak listesi — diğer tüm tool'ları devral, bunları hariç tut        |
+| `model`           | `haiku` / `sonnet` / `opus` / tam model ID / `inherit`               |
+| `permissionMode`  | `default` / `acceptEdits` / `dontAsk` / `bypassPermissions` / `plan` |
+| `maxTurns`        | Agent bu kadar agentic tur sonrasında durur                          |
+| `background`      | `true` = ana oturumu bloklamadan eş zamanlı çalış                    |
+| `effort`          | `low` / `medium` / `high` / `max`                                    |
+| `isolation`       | `worktree` = izole bir git worktree'de çalıştır                      |
+| `initialPrompt`   | Agent başladığında otomatik gönderilecek ilk tur                     |
+| `memory`          | Kalıcı bellek kapsamı: `user` / `project` / `local`                  |
+| `hooks`           | Bu agent'a özgü yaşam döngüsü hook'ları                              |
+| `mcpServers`      | Bu agent'a açık MCP sunucuları                                       |
+| `skills`          | Bu agent için önceden yüklenen skill'ler                             |
+
 ### Paralel Agent Kullanımı
 
 Bağımsız görevler için birden fazla agent aynı anda tetiklenebilir. Ana oturum her birinin sonucunu bekler ve birleştirir. Örnek: Migration öncesinde hem `schema-analyzer` hem `dependency-checker` agent'ını aynı anda çalıştır.
+
+> **Not:** Agent'lar başka agent başlatamaz. Nesting (iç içe agent) desteklenmez — yalnızca ana oturum bir agent'a delege edebilir.
 
 ### Ne Zaman Agent, Ne Zaman Command
 
@@ -293,13 +343,14 @@ Bağımsız görevler için birden fazla agent aynı anda tetiklenebilir. Ana ot
 
 ### Yaygın Hatalar
 
-| Hata                                        | Çözüm                                                   |
-| ------------------------------------------- | ------------------------------------------------------- |
-| Uygulama yapan agent oluşturmak             | Agent okusun/analiz etsin, uygulamayı ana oturum yapsın |
-| Tüm tool'ları vermek                        | Minimum yetki: Read, Grep, Glob yeterli                 |
-| Yaygın isim kullanmak                       | Özel, projeye özgü isim ver                             |
-| Agent'a CLAUDE.md kurallarını tekrar yazmak | Agent kendi system prompt'unu alır, CLAUDE.md almaz     |
-| Çıktı formatı belirtmemek                   | Ana oturumun işleyeceği formatta döndürmesini iste      |
+| Hata                                          | Çözüm                                                     |
+| --------------------------------------------- | --------------------------------------------------------- |
+| Uygulama yapan agent oluşturmak               | Agent okusun/analiz etsin, uygulamayı ana oturum yapsın   |
+| Tüm tool'ları vermek                          | Minimum yetki: Read, Grep, Glob yeterli                   |
+| Yaygın isim kullanmak                         | Özel, projeye özgü isim ver                               |
+| Agent'a CLAUDE.md kurallarını tekrar yazmak   | Agent kendi system prompt'unu alır, CLAUDE.md almaz       |
+| Çıktı formatı belirtmemek                     | Ana oturumun işleyeceği formatta döndürmesini iste        |
+| Agent içinden başka agent başlatmaya çalışmak | Nesting desteklenmez; yalnızca ana oturum delege edebilir |
 
 ---
 
@@ -330,7 +381,7 @@ Bağımsız görevler için birden fazla agent aynı anda tetiklenebilir. Ana ot
 }
 ```
 
-**Auto-compact eşiğini düşür.** Varsayılan %95 çok geç. %60 daha temiz context sağlar.
+**Auto-compact eşiğini düşür.** %60 daha temiz context sağlar.
 
 ```json
 {
@@ -340,7 +391,9 @@ Bağımsız görevler için birden fazla agent aynı anda tetiklenebilir. Ana ot
 }
 ```
 
-**Thinking token bütçesini ayarla.** Varsayılan 32K token. Basit görevler için 8-10K yeterli.
+> ⚠️ `CLAUDE_AUTOCOMPACT_PCT_OVERRIDE` resmi dokümanlarda yer almaz. Kullanım riski sana aittir — gelecekteki Claude Code sürümlerinde davranış değişebilir.
+
+**Thinking token bütçesini ayarla.** Basit görevler için daha düşük bütçe maliyeti azaltır.
 
 ```json
 {
@@ -349,6 +402,8 @@ Bağımsız görevler için birden fazla agent aynı anda tetiklenebilir. Ana ot
   }
 }
 ```
+
+> ⚠️ `MAX_THINKING_TOKENS` resmi dokümanlarda yer almaz. Kullanım riski sana aittir — gelecekteki Claude Code sürümlerinde davranış değişebilir.
 
 **Hooks ile deterministik kontrol koy.** Linter'ı her düzenlemeden sonra otomatik çalıştır.
 
@@ -495,6 +550,8 @@ Claude Code'da tek bir araç çağrısını geri almak için:
 
 Birden fazla adımı geri almak için `/undo` zincirleme çalışmaz — bu durumda `git checkout` kullan.
 
+> **Not:** `/undo`, resmi bundled skill'ler arasında (`/batch`, `/claude-api`, `/debug`, `/loop`, `/simplify`) yer almaz. Kullanılabilirliği Claude Code sürümleri arasında farklılık gösterebilir; güvenilir geri alma için `git reset` tercih et.
+
 ### Context Bozulduğunda Recovery
 
 Uzun bir oturumda Claude tutarsız davranmaya başlarsa:
@@ -550,13 +607,12 @@ Kural takip edilmedi
 ### Rule'un Yüklenip Yüklenmediğini Kontrol Et
 
 ```bash
-# Claude Code'da context içeriğini gör
-/context
-
 # Hangi rule'ların yüklendiğini görmek için
 # debug modunda başlat
 claude --debug
 ```
+
+> **Not:** `/context` ve `/undo`, resmi bundled skill'ler (`/batch`, `/claude-api`, `/debug`, `/loop`, `/simplify`) arasında yer almaz. Bu komutların kullanılabilirliği Claude Code sürümleri arasında farklılık gösterebilir.
 
 ### Yaygın Sorunlar ve Çözümleri
 
@@ -674,12 +730,13 @@ allowed-tools: Read
 
 ### Kişisel vs. Proje Geneli Ayarlar
 
-| Ayar                                      | Nerede                                       |
-| ----------------------------------------- | -------------------------------------------- |
-| Takımın paylaştığı izinler, hook'lar      | `.claude/settings.json` (git'te)             |
-| Kişisel model tercihi, kişisel allow/deny | `.claude/settings.local.json` (git'te değil) |
-| Tüm projeler için geçerli kişisel ayarlar | `~/.claude/settings.json`                    |
-| Tüm projeler için kişisel CLAUDE.md       | `~/.claude/CLAUDE.md`                        |
+| Ayar                                      | Nerede                                                  |
+| ----------------------------------------- | ------------------------------------------------------- |
+| Takımın paylaştığı izinler, hook'lar      | `.claude/settings.json` (git'te)                        |
+| Kişisel model tercihi, kişisel allow/deny | `.claude/settings.local.json` (git'te değil)            |
+| Tüm projeler için geçerli kişisel ayarlar | `~/.claude/settings.json`                               |
+| Tüm projeler için kişisel CLAUDE.md       | `~/.claude/CLAUDE.md`                                   |
+| Proje CLAUDE.md (alternatif konum)        | `.claude/CLAUDE.md` (root'taki `CLAUDE.md` ile eşdeğer) |
 
 ### Takım CLAUDE.md Senkronizasyonu
 
@@ -707,7 +764,7 @@ git clone <repo>
 cd <project>
 
 # Claude Code'u kur (bkz. Kaynaklar)
-npm install -g @anthropic-ai/claude-code
+curl -fsSL https://claude.ai/install.sh | bash   # macOS / Linux / WSL
 
 # Kişisel ayarları oluştur
 cp .claude/settings.json .claude/settings.local.json
@@ -943,7 +1000,7 @@ model: opus     # Mimari karar, karmaşık planlama
 ### Bu Dokümanda Atıflar
 
 - Shrivu Shankar (Anthropic mühendisi) — slash command anti-pattern yorumu
-- Anthropic resmi önerisi — CLAUDE.md için ~500 satır üst sınır
+- Anthropic resmi önerisi — CLAUDE.md için 200 satırın altı
 - LLM talimat takip araştırmaları — ~150-200 tutarlı takip sınırı
 
 ---
